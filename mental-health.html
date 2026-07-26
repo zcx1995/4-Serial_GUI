@@ -889,12 +889,93 @@
         .board-mode-tag { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: 500; margin-left: 8px; }
         .board-mode-tag.cloud { background: rgba(110,198,176,0.15); color: #4A9D87; }
         @media (max-width: 768px) { .board-list { columns: 1; } .board-panel { padding: 36px 22px; } }
+
+        /* 情绪背景主题 */
+        body[data-mood="calm"] {
+            background: linear-gradient(135deg, #E8F4F8 0%, #D4E8ED 50%, #C8E6DC 100%);
+            background-size: 300% 300%;
+            animation: gradientShift 20s ease infinite;
+        }
+        body[data-mood="calm"] ~ .mood-bg-layer { background: none; }
+        .mood-bg-layer {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            opacity: 0; transition: opacity 1.5s ease;
+            background-size: 300% 300%; animation: gradientShift 20s ease infinite;
+        }
+        body[data-mood="happy"] ~ .mood-bg-layer {
+            opacity: 0.55;
+            background: linear-gradient(135deg, #FFF5D6 0%, #FFE8B3 30%, #FFD4A3 70%, #FFF0C2 100%);
+        }
+        body[data-mood="sad"] ~ .mood-bg-layer {
+            opacity: 0.6;
+            background: linear-gradient(135deg, #E8EEF2 0%, #D4DDE5 40%, #C5D0DB 100%);
+        }
+        body[data-mood="angry"] ~ .mood-bg-layer {
+            opacity: 0.5;
+            background: linear-gradient(135deg, #FFE5E0 0%, #FFC5BA 40%, #FFB5A8 100%);
+        }
+        body[data-mood="anxious"] ~ .mood-bg-layer {
+            opacity: 0.55;
+            background: linear-gradient(135deg, #F0E8F5 0%, #E5D5ED 50%, #DCCDE8 100%);
+        }
+        body[data-mood="tired"] ~ .mood-bg-layer {
+            opacity: 0.6;
+            background: linear-gradient(135deg, #EAE4D8 0%, #DDD5C5 50%, #D4CBB8 100%);
+        }
+        body[data-mood="lonely"] ~ .mood-bg-layer {
+            opacity: 0.55;
+            background: linear-gradient(135deg, #E5EDF2 0%, #D3DDE5 50%, #C8D4DD 100%);
+        }
+        body[data-mood="hopeful"] ~ .mood-bg-layer {
+            opacity: 0.55;
+            background: linear-gradient(135deg, #FFF8E6 0%, #FFEFD4 40%, #FFE0B2 100%);
+        }
+        body[data-mood="grateful"] ~ .mood-bg-layer {
+            opacity: 0.5;
+            background: linear-gradient(135deg, #FFE8EF 0%, #FFD4E0 40%, #FDE0E8 100%);
+        }
+        body[data-mood="confused"] ~ .mood-bg-layer {
+            opacity: 0.5;
+            background: linear-gradient(135deg, #EDE5F0 0%, #E4D8EA 50%, #DDD0E5 100%);
+        }
+
+        /* 光球随情绪变化颜色（通过 CSS 变量） */
+        body[data-mood="calm"] { --orb1: #A8E6CF; --orb2: #B8E0EB; --orb3: #C5F0D9; }
+        body[data-mood="happy"] { --orb1: #FFD89B; --orb2: #FFE5B3; --orb3: #FFF0C2; }
+        body[data-mood="sad"] { --orb1: #A0B8CC; --orb2: #8FA4B5; --orb3: #B5C8D8; }
+        body[data-mood="angry"] { --orb1: #FFAAA5; --orb2: #FF8B80; --orb3: #FFB5A8; }
+        body[data-mood="anxious"] { --orb1: #B8A9C9; --orb2: #A995BE; --orb3: #C5B5D4; }
+        body[data-mood="tired"] { --orb1: #C5B89A; --orb2: #B5A98B; --orb3: #D4C9B0; }
+        body[data-mood="lonely"] { --orb1: #9FB3C4; --orb2: #8EA5B8; --orb3: #B0C2D0; }
+        body[data-mood="hopeful"] { --orb1: #FFD699; --orb2: #FFC480; --orb3: #FFE8B3; }
+        body[data-mood="grateful"] { --orb1: #F4A6B8; --orb2: #F090A5; --orb3: #F8BCCB; }
+        body[data-mood="confused"] { --orb1: #A995BE; --orb2: #9582AB; --orb3: #BBAACB; }
+
+        .orb-1 { background: var(--orb1, var(--primary-light)); transition: background 1.5s ease; }
+        .orb-2 { background: var(--orb2, var(--secondary-light)); transition: background 1.5s ease; }
+        .orb-3 { background: var(--orb3, #FFD89B); transition: background 1.5s ease; }
+
+        /* 心情卡片选中颜色与情绪对应 */
+        .mood-option.active[data-mood="calm"] { border-color: #6EC6B0; background: rgba(168,230,207,0.25); }
+        .mood-option.active[data-mood="happy"] { border-color: #FFB347; background: rgba(255,216,155,0.3); }
+        .mood-option.active[data-mood="sad"] { border-color: #8FA4B5; background: rgba(143,164,181,0.25); }
+        .mood-option.active[data-mood="angry"] { border-color: #FF8B80; background: rgba(255,170,165,0.3); }
+        .mood-option.active[data-mood="anxious"] { border-color: #B8A9C9; background: rgba(184,169,201,0.3); }
+        .mood-option.active[data-mood="tired"] { border-color: #B5A98B; background: rgba(181,169,139,0.3); }
+        .mood-option.active[data-mood="lonely"] { border-color: #8EA5B8; background: rgba(142,165,184,0.25); }
+        .mood-option.active[data-mood="hopeful"] { border-color: #FFC480; background: rgba(255,196,128,0.3); }
+        .mood-option.active[data-mood="grateful"] { border-color: #F090A5; background: rgba(240,144,165,0.3); }
+        .mood-option.active[data-mood="confused"] { border-color: #9582AB; background: rgba(149,130,171,0.3); }
+
+        /* 心情提示语 */
+        .mood-caption { text-align: center; margin-top: 22px; font-size: 14px; color: var(--text-secondary); min-height: 22px; transition: opacity 0.5s ease; }
     </style>
 </head>
-<body>
+<body data-mood="calm">
     <div class="floating-orb orb-1"></div>
     <div class="floating-orb orb-2"></div>
     <div class="floating-orb orb-3"></div>
+    <div class="mood-bg-layer"></div>
 
     <nav>
         <div class="logo">Serene</div>
@@ -1013,27 +1094,48 @@
                             每一次记录，都是认识自己的开始。
                         </p>
                         <div class="mood-options">
-                            <div class="mood-option" data-mood="great">
+                            <div class="mood-option active" data-mood="calm">
+                                <span class="mood-emoji">😌</span>
+                                <span class="mood-label">平静</span>
+                            </div>
+                            <div class="mood-option" data-mood="happy">
                                 <span class="mood-emoji">😊</span>
-                                <span class="mood-label">很棒</span>
-                            </div>
-                            <div class="mood-option" data-mood="good">
-                                <span class="mood-emoji">🙂</span>
-                                <span class="mood-label">不错</span>
-                            </div>
-                            <div class="mood-option active" data-mood="okay">
-                                <span class="mood-emoji">😐</span>
-                                <span class="mood-label">一般</span>
-                            </div>
-                            <div class="mood-option" data-mood="low">
-                                <span class="mood-emoji">😔</span>
-                                <span class="mood-label">低落</span>
+                                <span class="mood-label">开心</span>
                             </div>
                             <div class="mood-option" data-mood="sad">
                                 <span class="mood-emoji">😢</span>
                                 <span class="mood-label">难过</span>
                             </div>
+                            <div class="mood-option" data-mood="angry">
+                                <span class="mood-emoji">😠</span>
+                                <span class="mood-label">生气</span>
+                            </div>
+                            <div class="mood-option" data-mood="anxious">
+                                <span class="mood-emoji">😰</span>
+                                <span class="mood-label">焦虑</span>
+                            </div>
+                            <div class="mood-option" data-mood="tired">
+                                <span class="mood-emoji">😴</span>
+                                <span class="mood-label">疲惫</span>
+                            </div>
+                            <div class="mood-option" data-mood="lonely">
+                                <span class="mood-emoji">😔</span>
+                                <span class="mood-label">孤独</span>
+                            </div>
+                            <div class="mood-option" data-mood="hopeful">
+                                <span class="mood-emoji">🌟</span>
+                                <span class="mood-label">希望</span>
+                            </div>
+                            <div class="mood-option" data-mood="grateful">
+                                <span class="mood-emoji">🥰</span>
+                                <span class="mood-label">感恩</span>
+                            </div>
+                            <div class="mood-option" data-mood="confused">
+                                <span class="mood-emoji">😵‍💫</span>
+                                <span class="mood-label">迷茫</span>
+                            </div>
                         </div>
+                        <div class="mood-caption">平静的时刻，像湖水一样安宁</div>
                     </div>
                     
                     <div class="reveal">
@@ -1229,11 +1331,41 @@
             breathingEl.textContent = breathingTexts[breathIndex];
         }, 2000);
 
+        // 情绪背景切换
+        const moodCaptions = {
+            calm: '平静的时刻，像湖水一样安宁',
+            happy: '开心的你，像阳光一样温暖',
+            sad: '难过是可以的，眼泪会带走心里的重量',
+            angry: '生气不是错，你的感受很重要',
+            anxious: '焦虑在提醒你，你在认真生活',
+            tired: '累了就休息一下，你已经很努力了',
+            lonely: '孤独只是暂时的，总有人在远方想着你',
+            hopeful: '心里有光的人，走到哪里都能发亮',
+            grateful: '懂得感恩的人，总能发现小确幸',
+            confused: '迷茫也是人生的一部分，慢慢来就好'
+        };
+
         const moodOptions = document.querySelectorAll('.mood-option');
+
+        function setMood(mood) {
+            document.body.setAttribute('data-mood', mood);
+            moodOptions.forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.mood === mood);
+            });
+            const caption = document.querySelector('.mood-caption');
+            if (caption) {
+                caption.style.opacity = '0';
+                setTimeout(() => {
+                    caption.textContent = moodCaptions[mood] || '';
+                    caption.style.opacity = '1';
+                }, 300);
+            }
+        }
+
         moodOptions.forEach(option => {
             option.addEventListener('click', () => {
-                moodOptions.forEach(opt => opt.classList.remove('active'));
-                option.classList.add('active');
+                const mood = option.dataset.mood;
+                setMood(mood);
             });
         });
 
@@ -1299,12 +1431,19 @@
         const boardModeTag = document.getElementById('boardModeTag');
 
         let selectedEmoji = '🌿';
+        const emojiMoodMap = {
+            '🌿': 'calm', '🌧️': 'sad', '🔥': 'angry', '🍃': 'grateful',
+            '🌊': 'anxious', '✨': 'hopeful', '🌙': 'tired', '💕': 'happy'
+        };
         boardMoodPick.addEventListener('click', e => {
             const btn = e.target.closest('.board-mood-btn');
             if (!btn) return;
             boardMoodPick.querySelectorAll('.board-mood-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             selectedEmoji = btn.dataset.emoji;
+            if (typeof setMood === 'function' && emojiMoodMap[selectedEmoji]) {
+                setMood(emojiMoodMap[selectedEmoji]);
+            }
         });
 
         boardText.addEventListener('input', () => {
