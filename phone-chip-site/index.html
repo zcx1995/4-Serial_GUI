@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaCore X1 — 旗舰手机芯片</title>
+  <meta name="description" content="NovaCore X1 旗舰手机芯片 — 重新定义移动计算。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 背景光效层 -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- 导航 -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#top" class="logo">
+        <span class="logo-mark"></span>
+        <span class="logo-text">NOVA<span>CORE</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#overview">概览</a>
+        <a href="#performance">性能</a>
+        <a href="#architecture">架构</a>
+        <a href="#ai">AI</a>
+        <a href="#imaging">影像</a>
+        <a href="#connectivity">通信</a>
+        <a href="#specs">规格</a>
+      </nav>
+      <a href="#specs" class="btn btn-ghost nav-cta">了解详情</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="eyebrow reveal">NovaCore X1 · Flagship SoC</span>
+        <h1 class="hero-title reveal">
+          一颗芯片<br />
+          <span class="grad-text">驱动下一代</span><br />
+          移动智能
+        </h1>
+        <p class="hero-sub reveal">
+          采用第二代 3nm 工艺，集成 12 核 CPU 与全新 NPX 架构 NPU，
+          在性能、能效与端侧 AI 之间取得完美平衡。
+        </p>
+        <div class="hero-actions reveal">
+          <a href="#performance" class="btn btn-primary">探索性能</a>
+          <a href="#specs" class="btn btn-ghost">技术规格</a>
+        </div>
+        <div class="hero-stats reveal">
+          <div class="stat">
+            <div class="stat-num" data-count="3.4" data-suffix="GHz">0</div>
+            <div class="stat-label">峰值主频</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" data-count="45" data-suffix="TOPS">0</div>
+            <div class="stat-label">AI 算力</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" data-count="40" data-suffix="%">0</div>
+            <div class="stat-label">能效提升</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="chip-stage">
+          <div class="chip-glow"></div>
+          <div class="chip">
+            <div class="chip-substrate">
+              <div class="chip-die">
+                <div class="die-logo">NOVA<span>CORE</span></div>
+                <div class="die-model">X1</div>
+                <div class="die-grid">
+                  <span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="die-label">3nm · FLAGSHIP</div>
+              </div>
+              <!-- 四周引脚 -->
+              <div class="pins pins-top"></div>
+              <div class="pins pins-right"></div>
+              <div class="pins pins-bottom"></div>
+              <div class="pins pins-left"></div>
+            </div>
+          </div>
+          <div class="orbit orbit-1"></div>
+          <div class="orbit orbit-2"></div>
+          <div class="orbit orbit-3"></div>
+        </div>
+      </div>
+    </div>
+    <a href="#overview" class="scroll-cue">
+      <span>SCROLL</span>
+      <span class="scroll-line"></span>
+    </a>
+  </section>
+
+  <!-- 概览亮点 -->
+  <section class="section" id="overview">
+    <div class="section-head reveal">
+      <span class="section-tag">概览</span>
+      <h2 class="section-title">为旗舰而生，为未来而造</h2>
+      <p class="section-desc">
+        NovaCore X1 在每一项关键指标上都重新定义了移动芯片的天花板。
+      </p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        </div>
+        <h3>极致性能</h3>
+        <p>12 核异构架构，超大核主频 3.4GHz，多核性能较上代提升 35%。</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M5 19l2.5-2.5M16.5 7.5L19 5"/></svg>
+        </div>
+        <h3>端侧 AI</h3>
+        <p>45 TOPS 算力 NPU，支持百亿参数大模型本地推理，响应低至 8ms。</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+        </div>
+        <h3>能效革命</h3>
+        <p>第二代 3nm 工艺搭配自适应电源管理，同性能下功耗降低 40%。</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8.5C2 5 5 2 8.5 2S15 5 15 8.5M22 15.5c0 3.5-3 6.5-6.5 6.5S9 19 9 15.5"/><circle cx="8.5" cy="8.5" r="2.5"/><circle cx="15.5" cy="15.5" r="2.5"/></svg>
+        </div>
+        <h3>全频段通信</h3>
+        <p>集成 5G R17 基带与 Wi-Fi 7，下行速率高达 7.5Gbps，全球漫游无界。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 性能 -->
+  <section class="section section-dark" id="performance">
+    <div class="section-head reveal">
+      <span class="section-tag">性能</span>
+      <h2 class="section-title">每一次触碰，瞬息响应</h2>
+      <p class="section-desc">
+        异构 12 核架构将超大核、大核与小核智能调度，应对重度负载游刃有余。
+      </p>
+    </div>
+    <div class="perf-layout">
+      <div class="perf-bars reveal">
+        <h3 class="perf-h">CPU 多核性能对比</h3>
+        <div class="bar-item">
+          <div class="bar-head"><span>NovaCore X1</span><span class="bar-val">100</span></div>
+          <div class="bar"><div class="bar-fill bar-fill-1" data-w="100"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-head"><span>上代 X0</span><span class="bar-val">74</span></div>
+          <div class="bar"><div class="bar-fill bar-fill-2" data-w="74"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-head"><span>同级竞品 A</span><span class="bar-val">68</span></div>
+          <div class="bar"><div class="bar-fill bar-fill-3" data-w="68"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-head"><span>同级竞品 B</span><span class="bar-val">61</span></div>
+          <div class="bar"><div class="bar-fill bar-fill-4" data-w="61"></div></div>
+        </div>
+        <p class="perf-note">数据来自 NovaCore 实验室 Geekbench 多核测试，分数已归一化。</p>
+      </div>
+      <div class="perf-cards reveal">
+        <div class="perf-card">
+          <div class="perf-card-num">3.4<span>GHz</span></div>
+          <div class="perf-card-label">超大核主频</div>
+        </div>
+        <div class="perf-card">
+          <div class="perf-card-num">12<span>核</span></div>
+          <div class="perf-card-label">异构 CPU</div>
+        </div>
+        <div class="perf-card">
+          <div class="perf-card-num">35<span>%</span></div>
+          <div class="perf-card-label">性能提升</div>
+        </div>
+        <div class="perf-card">
+          <div class="perf-card-num">120<span>FPS</span></div>
+          <div class="perf-card-label">原生高刷游戏</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 架构 -->
+  <section class="section" id="architecture">
+    <div class="section-head reveal">
+      <span class="section-tag">架构</span>
+      <h2 class="section-title">一颗芯片，一个微型宇宙</h2>
+      <p class="section-desc">
+        在指甲盖大小的硅片上，集成了超过 220 亿颗晶体管，构建完整的移动计算系统。
+      </p>
+    </div>
+    <div class="arch-diagram reveal">
+      <div class="arch-center">
+        <div class="arch-core">NovaCore<br/>X1</div>
+      </div>
+      <div class="arch-node arch-node-1">
+        <div class="arch-node-title">CPU</div>
+        <div class="arch-node-desc">1×X3 超大核 · 4×A780 · 4×A520</div>
+      </div>
+      <div class="arch-node arch-node-2">
+        <div class="arch-node-title">GPU</div>
+        <div class="arch-node-desc">Immortalis-G925 · 硬件光追</div>
+      </div>
+      <div class="arch-node arch-node-3">
+        <div class="arch-node-title">NPU</div>
+        <div class="arch-node-desc">NPX 2.0 · 45 TOPS</div>
+      </div>
+      <div class="arch-node arch-node-4">
+        <div class="arch-node-title">ISP</div>
+        <div class="arch-node-desc">八核 ISP · 4亿像素</div>
+      </div>
+      <div class="arch-node arch-node-5">
+        <div class="arch-node-title">Modem</div>
+        <div class="arch-node-desc">5G R17 · 7.5Gbps</div>
+      </div>
+      <div class="arch-node arch-node-6">
+        <div class="arch-node-title">Memory</div>
+        <div class="arch-node-desc">LPDDR5X · 9600Mbps</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI -->
+  <section class="section section-dark" id="ai">
+    <div class="section-head reveal">
+      <span class="section-tag">AI</span>
+      <h2 class="section-title">端侧智能，触手可及</h2>
+      <p class="section-desc">
+        全新 NPX 2.0 架构 NPU，让百亿参数大模型在你的口袋里运行。
+      </p>
+    </div>
+    <div class="ai-grid">
+      <div class="ai-card ai-card-lg reveal">
+        <div class="ai-card-bg"></div>
+        <div class="ai-card-content">
+          <span class="ai-tag">大模型推理</span>
+          <h3>本地运行 30B 参数模型</h3>
+          <p>无需云端，隐私不出端。生成速度达 28 tokens/s，对话响应几乎无延迟。</p>
+        </div>
+      </div>
+      <div class="ai-card reveal">
+        <span class="ai-tag">实时翻译</span>
+        <h3>多语种同传</h3>
+        <p>支持 90+ 语言实时互译。</p>
+      </div>
+      <div class="ai-card reveal">
+        <span class="ai-tag">图像生成</span>
+        <h3>秒级出图</h3>
+        <p>端侧扩散模型，1.2s 生成一张图。</p>
+      </div>
+      <div class="ai-card reveal">
+        <span class="ai-tag">智能体</span>
+        <h3>多模态 Agent</h3>
+        <p>理解屏幕、操作应用、自主决策。</p>
+      </div>
+      <div class="ai-card reveal">
+        <span class="ai-tag">隐私</span>
+        <h3>数据不出端</h3>
+        <p>所有 AI 推理在本地完成。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 影像 -->
+  <section class="section" id="imaging">
+    <div class="section-head reveal">
+      <span class="section-tag">影像</span>
+      <h2 class="section-title">所见即所得，超乎所见</h2>
+      <p class="section-desc">
+        八核 ISP 与 AI 画质引擎协同，让每一帧画面都接近人眼所见的真实。
+      </p>
+    </div>
+    <div class="img-layout reveal">
+      <div class="img-panel img-panel-main">
+        <div class="img-panel-bg" style="background:linear-gradient(135deg,#0a1f3d,#1a3a6e,#4a7fc8)"></div>
+        <div class="img-panel-content">
+          <span class="img-tag">夜景模式</span>
+          <h3>极夜之眼</h3>
+          <p>0.1 lux 环境下仍可清晰成像，AI 降噪保留每一处细节。</p>
+        </div>
+      </div>
+      <div class="img-panel img-panel-side">
+        <div class="img-panel-bg" style="background:linear-gradient(135deg,#1d0a3d,#5a1a8e,#c84afc)"></div>
+        <div class="img-panel-content">
+          <span class="img-tag">4亿像素</span>
+          <h3>超清主摄</h3>
+          <p>支持 4 历像素合一，进光量提升 60%。</p>
+        </div>
+      </div>
+      <div class="img-panel img-panel-side">
+        <div class="img-panel-bg" style="background:linear-gradient(135deg,#0a3d1f,#1a8e5a,#4afca8)"></div>
+        <div class="img-panel-content">
+          <span class="img-tag">8K 视频</span>
+          <h3>电影级录制</h3>
+          <p>8K@60fps 全程防抖，实时 HDR 调色。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 通信 -->
+  <section class="section section-dark" id="connectivity">
+    <div class="section-head reveal">
+      <span class="section-tag">通信</span>
+      <h2 class="section-title">永远在线，无缝连接</h2>
+      <p class="section-desc">
+        全球频段覆盖，让数据如呼吸般自然流动。
+      </p>
+    </div>
+    <div class="conn-grid">
+      <div class="conn-card reveal">
+        <div class="conn-num">7.5<span>Gbps</span></div>
+        <div class="conn-label">5G 峰值下行</div>
+        <p>5G R17 基带，支持 Sub-6 与毫米波。</p>
+      </div>
+      <div class="conn-card reveal">
+        <div class="conn-num">5.8<span>Gbps</span></div>
+        <div class="conn-label">Wi-Fi 7 峰值</div>
+        <p>多链路并发，延迟低至 2ms。</p>
+      </div>
+      <div class="conn-card reveal">
+        <div class="conn-num">BT 5.4</div>
+        <div class="conn-label">蓝牙新标准</div>
+        <p>Auracast 广播音频，多点连接。</p>
+      </div>
+      <div class="conn-card reveal">
+        <div class="conn-num">UWB</div>
+        <div class="conn-label">精准定位</div>
+        <p>厘米级空间感知，设备无缝协同。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 规格表 -->
+  <section class="section" id="specs">
+    <div class="section-head reveal">
+      <span class="section-tag">规格</span>
+      <h2 class="section-title">技术参数</h2>
+      <p class="section-desc">NovaCore X1 详细规格一览。</p>
+    </div>
+    <div class="specs-wrap reveal">
+      <table class="specs-table">
+        <tbody>
+          <tr><td class="specs-key">工艺制程</td><td class="specs-val">第二代 3nm (N3E)</td></tr>
+          <tr><td class="specs-key">晶体管数量</td><td class="specs-val">22.8 亿</td></tr>
+          <tr><td class="specs-key">CPU 架构</td><td class="specs-val">1×X3 @3.4GHz + 4×A780 @2.8GHz + 4×A520 @2.0GHz</td></tr>
+          <tr><td class="specs-key">GPU</td><td class="specs-val">Immortalis-G925 MC12，硬件光追 2.0</td></tr>
+          <tr><td class="specs-key">NPU</td><td class="specs-val">NPX 2.0，45 TOPS INT8 / 22 TOPS FP16</td></tr>
+          <tr><td class="specs-key">ISP</td><td class="specs-val">八核 ISP，最高 4 亿像素，8K@60fps</td></tr>
+          <tr><td class="specs-key">内存</td><td class="specs-val">LPDDR5X-9600，4 通道</td></tr>
+          <tr><td class="specs-key">存储</td><td class="specs-val">UFS 4.1，读写 4.2GB/s</td></tr>
+          <tr><td class="specs-key">基带</td><td class="specs-val">5G R17，Sub-6 7.5Gbps / mmWave 10Gbps</td></tr>
+          <tr><td class="specs-key">无线</td><td class="specs-val">Wi-Fi 7 (BE) / BT 5.4 / UWB</td></tr>
+          <tr><td class="specs-key">视频解码</td><td class="specs-val">8K@60fps AV1 / H.266 / VVC</td></tr>
+          <tr><td class="specs-key">安全</td><td class="specs-val">独立安全岛 SE，硬件级加密引擎</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section reveal">
+    <div class="cta-inner">
+      <h2 class="cta-title">为下一代旗舰而生</h2>
+      <p class="cta-sub">NovaCore X1，让每一台手机都拥有超凡的可能。</p>
+      <div class="cta-actions">
+        <a href="#top" class="btn btn-primary">返回顶部</a>
+        <a href="#specs" class="btn btn-ghost">查看规格</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#top" class="logo">
+          <span class="logo-mark"></span>
+          <span class="logo-text">NOVA<span>CORE</span></span>
+        </a>
+        <p class="footer-tag">驱动下一代移动智能。</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>产品</h4>
+          <a href="#overview">概览</a>
+          <a href="#performance">性能</a>
+          <a href="#architecture">架构</a>
+          <a href="#specs">规格</a>
+        </div>
+        <div class="footer-col">
+          <h4>技术</h4>
+          <a href="#ai">端侧 AI</a>
+          <a href="#imaging">影像</a>
+          <a href="#connectivity">通信</a>
+        </div>
+        <div class="footer-col">
+          <h4>公司</h4>
+          <a href="#">关于我们</a>
+          <a href="#">新闻动态</a>
+          <a href="#">投资者关系</a>
+          <a href="#">加入我们</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NovaCore Semiconductor. 本页面为概念演示用途。</span>
+      <span class="footer-meta">NovaCore X1 · Concept Showcase</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
