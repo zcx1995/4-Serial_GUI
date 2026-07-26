@@ -812,6 +812,83 @@
                 padding: 0 20px;
             }
         }
+
+        /* 匿名树洞留言板 */
+        .board-panel {
+            background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border); border-radius: var(--radius-md);
+            padding: 56px 44px; box-shadow: var(--shadow-medium); max-width: 1000px; margin: 0 auto;
+        }
+        .board-post {
+            background: rgba(255,255,255,0.6); border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md); padding: 26px; margin-bottom: 28px;
+        }
+        .board-post-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+        .board-nick {
+            flex: 1; min-width: 140px; padding: 11px 16px; border-radius: var(--radius-sm);
+            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.7);
+            font-family: inherit; font-size: 14px; color: var(--text-primary); outline: none; transition: all 0.3s ease;
+        }
+        .board-nick:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(110,198,176,0.15); }
+        .board-mood-pick { display: flex; gap: 6px; }
+        .board-mood-btn {
+            width: 40px; height: 40px; border-radius: 50%; border: 2px solid transparent;
+            background: rgba(255,255,255,0.6); cursor: pointer; font-size: 20px; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .board-mood-btn:hover { transform: scale(1.15); }
+        .board-mood-btn.active { border-color: var(--primary); background: rgba(110,198,176,0.15); transform: scale(1.1); }
+        .board-textarea {
+            width: 100%; min-height: 100px; padding: 16px; border-radius: var(--radius-sm);
+            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.7);
+            font-family: inherit; font-size: 15px; line-height: 1.7; color: var(--text-primary);
+            resize: vertical; outline: none; transition: all 0.3s ease; margin-bottom: 14px; box-sizing: border-box;
+        }
+        .board-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(110,198,176,0.15); background: rgba(255,255,255,0.9); }
+        .board-post-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+        .board-char-count { font-size: 12px; color: var(--text-light); }
+        .board-submit {
+            padding: 12px 28px; background: linear-gradient(135deg, #4A9D87, var(--primary));
+            color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 500;
+            cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(110,198,176,0.4);
+        }
+        .board-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(110,198,176,0.5); }
+        .board-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .board-list-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+        .board-list-title { font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 400; color: var(--text-primary); }
+        .board-refresh { padding: 8px 18px; background: rgba(255,255,255,0.6); border: 1px solid var(--glass-border); border-radius: 50px; font-size: 13px; color: var(--text-secondary); cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+        .board-refresh:hover { background: rgba(255,255,255,0.9); color: #4A9D87; }
+        .board-list { columns: 3; column-gap: 20px; }
+        .board-card {
+            break-inside: avoid; margin-bottom: 20px; padding: 22px;
+            background: rgba(255,255,255,0.6); border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm); transition: all 0.3s ease; display: inline-block; width: 100%;
+        }
+        .board-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+        .board-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .board-card-emoji { font-size: 26px; }
+        .board-card-nick { font-family: 'Noto Serif SC', serif; font-size: 15px; font-weight: 500; color: var(--text-primary); }
+        .board-card-time { font-size: 11px; color: var(--text-light); margin-left: auto; }
+        .board-card-text { font-size: 14px; color: var(--text-secondary); line-height: 1.8; white-space: pre-wrap; word-break: break-word; }
+        .board-card-foot { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+        .board-hug-btn {
+            padding: 6px 14px; background: rgba(255,170,165,0.15); border: 1px solid rgba(255,170,165,0.3);
+            border-radius: 50px; font-size: 12px; color: #D97A6E; cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 4px; font-family: inherit;
+        }
+        .board-hug-btn:hover { background: rgba(255,170,165,0.25); transform: scale(1.05); }
+        .board-hug-btn.hugged { background: rgba(255,170,165,0.3); color: #C0655A; }
+        .board-empty { text-align: center; padding: 48px 20px; color: var(--text-light); font-size: 14px; }
+        .privacy-note {
+            display: flex; align-items: flex-start; gap: 10px; padding: 14px 18px;
+            background: rgba(168,230,207,0.15); border: 1px solid rgba(110,198,176,0.25);
+            border-radius: var(--radius-sm); margin-bottom: 24px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;
+        }
+        .privacy-note-icon { font-size: 18px; flex-shrink: 0; }
+        .privacy-note strong { color: #4A9D87; }
+        .board-mode-tag { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: 500; margin-left: 8px; }
+        .board-mode-tag.cloud { background: rgba(110,198,176,0.15); color: #4A9D87; }
+        @media (max-width: 768px) { .board-list { columns: 1; } .board-panel { padding: 36px 22px; } }
     </style>
 </head>
 <body>
@@ -826,8 +903,9 @@
             <li><a href="#features">服务</a></li>
             <li><a href="#mood">心情</a></li>
             <li><a href="#experts">专家</a></li>
+            <li><a href="#board">树洞</a></li>
         </ul>
-        <button class="nav-cta">开始疗愈</button>
+        <button class="nav-cta" onclick="document.getElementById('board').scrollIntoView({behavior:'smooth'})">开始疗愈</button>
     </nav>
 
     <section class="hero" id="home">
@@ -1061,6 +1139,55 @@
         </div>
     </section>
 
+    <section id="board">
+        <div class="container">
+            <div class="reveal" style="text-align: center; margin-bottom: 48px;">
+                <h2 style="font-family: 'Noto Serif SC', serif; font-size: 38px; font-weight: 300; color: var(--text-primary); margin-bottom: 16px;">匿名树洞 · 这里有人懂你</h2>
+                <p style="color: var(--text-secondary); font-size: 16px; max-width: 560px; margin: 0 auto; line-height: 1.8;">把心事留在墙上，会有人来给你一个抱抱。也可以读读小伙伴们的留言，送出你的温暖</p>
+            </div>
+
+            <div class="board-panel reveal">
+                <div class="privacy-note">
+                    <span class="privacy-note-icon">🔒</span>
+                    <div>
+                        <strong>隐私保护说明</strong><br>
+                        完全匿名，不需要注册或登录。昵称可以随便起，不记录任何个人信息。
+                        留言仅包含昵称、心情和内容，仅用于互相温暖，绝不用于其他用途。
+                    </div>
+                </div>
+
+                <div class="board-post">
+                    <div class="board-post-head">
+                        <input type="text" class="board-nick" id="boardNick" placeholder="给自己起个昵称（不填就匿名啦）" maxlength="12">
+                        <div class="board-mood-pick" id="boardMoodPick">
+                            <button class="board-mood-btn active" data-emoji="🌿">🌿</button>
+                            <button class="board-mood-btn" data-emoji="🌧️">🌧️</button>
+                            <button class="board-mood-btn" data-emoji="🔥">🔥</button>
+                            <button class="board-mood-btn" data-emoji="🍃">🍃</button>
+                            <button class="board-mood-btn" data-emoji="🌊">🌊</button>
+                            <button class="board-mood-btn" data-emoji="✨">✨</button>
+                            <button class="board-mood-btn" data-emoji="🌙">🌙</button>
+                            <button class="board-mood-btn" data-emoji="💕">💕</button>
+                        </div>
+                    </div>
+                    <textarea class="board-textarea" id="boardText" placeholder="想说点什么都可以～开心的事、难过的事、想吐槽的、想感谢的……这里都听着呢" maxlength="300"></textarea>
+                    <div class="board-post-actions">
+                        <span class="board-char-count" id="boardCharCount">0 / 300</span>
+                        <button class="board-submit" id="boardSubmit">留下我的心事</button>
+                    </div>
+                </div>
+
+                <div class="board-list-head">
+                    <div class="board-list-title">温暖墙 <span class="board-mode-tag cloud" id="boardModeTag">连接中…</span></div>
+                    <button class="board-refresh" id="boardRefresh">🔄 刷新看看</button>
+                </div>
+                <div class="board-list" id="boardList">
+                    <div class="board-empty">正在加载留言…</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section>
         <div class="container">
             <div class="cta-section reveal">
@@ -1082,11 +1209,11 @@
             <div class="footer-logo">Serene</div>
             <p class="footer-tagline">让心灵回归宁静，让生活充满阳光</p>
             <ul class="footer-links">
-                <li><a href="#">关于我们</a></li>
-                <li><a href="#">服务项目</a></li>
-                <li><a href="#">专家团队</a></li>
-                <li><a href="#">帮助中心</a></li>
-                <li><a href">隐私政策</a></li>
+                <li><a href="#features">服务项目</a></li>
+                <li><a href="#mood">心情追踪</a></li>
+                <li><a href="#experts">专家团队</a></li>
+                <li><a href="#board">匿名树洞</a></li>
+                <li><a href="#">隐私政策</a></li>
             </ul>
             <p class="footer-copyright">© 2026 Serene · 用爱与专业守护每一颗心灵</p>
         </div>
@@ -1160,6 +1287,151 @@
             
             barObserver.observe(bar);
         });
+
+        // ==================== 匿名树洞留言板（本地 API） ====================
+        const boardNick = document.getElementById('boardNick');
+        const boardText = document.getElementById('boardText');
+        const boardSubmit = document.getElementById('boardSubmit');
+        const boardList = document.getElementById('boardList');
+        const boardRefresh = document.getElementById('boardRefresh');
+        const boardCharCount = document.getElementById('boardCharCount');
+        const boardMoodPick = document.getElementById('boardMoodPick');
+        const boardModeTag = document.getElementById('boardModeTag');
+
+        let selectedEmoji = '🌿';
+        boardMoodPick.addEventListener('click', e => {
+            const btn = e.target.closest('.board-mood-btn');
+            if (!btn) return;
+            boardMoodPick.querySelectorAll('.board-mood-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedEmoji = btn.dataset.emoji;
+        });
+
+        boardText.addEventListener('input', () => {
+            boardCharCount.textContent = boardText.value.length + ' / 300';
+        });
+
+        const savedNick = localStorage.getItem('serene_nick');
+        if (savedNick) boardNick.value = savedNick;
+
+        function escapeHtml(t) {
+            const d = document.createElement('div');
+            d.textContent = t || '';
+            return d.innerHTML;
+        }
+
+        function timeAgo(ts) {
+            const diff = Date.now() - ts;
+            const m = Math.floor(diff / 60000);
+            if (m < 1) return '刚刚';
+            if (m < 60) return m + ' 分钟前';
+            const h = Math.floor(m / 60);
+            if (h < 24) return h + ' 小时前';
+            const d = Math.floor(h / 24);
+            if (d < 7) return d + ' 天前';
+            return new Date(ts).toLocaleDateString('zh-CN');
+        }
+
+        function renderBoard(items) {
+            if (!items || !items.length) {
+                boardList.innerHTML = '<div class="board-empty">墙上还空空的，来做第一个留下心事的小伙伴吧 ~</div>';
+                return;
+            }
+            const hugs = JSON.parse(localStorage.getItem('serene_hugs') || '{}');
+            boardList.innerHTML = items.map(it => {
+                const hugged = hugs[it.id] ? 'hugged' : '';
+                const hugCount = it.hugs || 0;
+                return `<div class="board-card">
+                    <div class="board-card-head">
+                        <span class="board-card-emoji">${it.emoji || '🌿'}</span>
+                        <span class="board-card-nick">${escapeHtml(it.nick || '匿名小伙伴')}</span>
+                        <span class="board-card-time">${timeAgo(it.created_at)}</span>
+                    </div>
+                    <div class="board-card-text">${escapeHtml(it.content)}</div>
+                    <div class="board-card-foot">
+                        <button class="board-hug-btn ${hugged}" data-id="${it.id}">🤗 抱抱 ${hugCount > 0 ? hugCount : ''}</button>
+                    </div>
+                </div>`;
+            }).join('');
+            boardList.querySelectorAll('.board-hug-btn').forEach(btn => {
+                btn.addEventListener('click', () => toggleHug(btn));
+            });
+        }
+
+        async function toggleHug(btn) {
+            const id = btn.dataset.id;
+            const hugs = JSON.parse(localStorage.getItem('serene_hugs') || '{}');
+            if (hugs[id]) {
+                delete hugs[id];
+                btn.classList.remove('hugged');
+                localStorage.setItem('serene_hugs', JSON.stringify(hugs));
+                loadBoard();
+                return;
+            }
+            hugs[id] = true;
+            btn.classList.add('hugged');
+            localStorage.setItem('serene_hugs', JSON.stringify(hugs));
+            try {
+                const res = await fetch('/api/board/hug', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                });
+                const data = await res.json();
+                if (data.ok) btn.innerHTML = '🤗 抱抱 ' + data.hugs;
+            } catch(e) {}
+        }
+
+        async function loadBoard() {
+            try {
+                const res = await fetch('/api/board');
+                const data = await res.json();
+                boardModeTag.textContent = '云端共享';
+                boardModeTag.className = 'board-mode-tag cloud';
+                renderBoard(data);
+            } catch(e) {
+                boardModeTag.textContent = '离线模式';
+                boardModeTag.className = 'board-mode-tag cloud';
+                boardList.innerHTML = '<div class="board-empty">暂时连不上服务器，请稍后再试试 ~</div>';
+            }
+        }
+
+        boardSubmit.addEventListener('click', async () => {
+            const content = boardText.value.trim();
+            if (!content) { boardText.focus(); return; }
+            const nick = boardNick.value.trim() || '匿名小伙伴';
+            localStorage.setItem('serene_nick', nick);
+            boardSubmit.disabled = true;
+            boardSubmit.textContent = '发送中...';
+            try {
+                const res = await fetch('/api/board', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nick: nick.slice(0, 12), emoji: selectedEmoji, content: content.slice(0, 300) })
+                });
+                const data = await res.json();
+                if (data.ok) {
+                    boardText.value = '';
+                    boardCharCount.textContent = '0 / 300';
+                    await loadBoard();
+                }
+            } catch(e) {
+                boardList.innerHTML = '<div class="board-empty">网络开小差了，再试一次吧 ~</div>';
+            }
+            boardSubmit.disabled = false;
+            boardSubmit.textContent = '留下我的心事';
+        });
+
+        boardRefresh.addEventListener('click', loadBoard);
+        boardText.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.key === 'Enter') boardSubmit.click();
+        });
+
+        // 进入树洞区域时加载
+        const boardObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { loadBoard(); boardObserver.disconnect(); } });
+        }, { threshold: 0.1 });
+        boardObserver.observe(document.getElementById('board'));
     </script>
 </body>
 </html>
