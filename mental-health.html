@@ -112,11 +112,11 @@ section{padding:120px 0}
 .feat-card p{font-size:14px;color:var(--ts);line-height:1.8}
 
 /* 心情选择 */
-.mood-wrap{background:var(--gb);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--gb2);border-radius:var(--r2);padding:56px 44px;box-shadow:var(--sh2);max-width:900px;margin:0 auto}
-.mood-desc{text-align:center;color:var(--ts);font-size:15px;margin-bottom:32px;line-height:1.8}
-.mood-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
-.mood{padding:20px 12px;border-radius:var(--r1);background:rgba(255,255,255,.5);border:2px solid transparent;text-align:center;cursor:pointer;transition:transform .3s,background .3s,border-color .3s}
-.mood:hover{transform:translateY(-4px);background:rgba(255,255,255,.7)}
+.mood-wrap{background:var(--gb);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--gb2);border-radius:var(--r2);padding:40px 24px;box-shadow:var(--sh2);max-width:900px;margin:0 auto}
+.mood-desc{text-align:center;color:var(--ts);font-size:15px;margin-bottom:28px;line-height:1.8}
+.mood-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.mood{padding:16px 8px;border-radius:var(--r1);background:rgba(255,255,255,.5);border:2px solid transparent;text-align:center;cursor:pointer;transition:transform .3s,background .3s,border-color .3s}
+.mood:hover{transform:translateY(-3px);background:rgba(255,255,255,.7)}
 .mood.active{border-color:var(--c1);background:rgba(168,230,207,.25)}
 .mood[data-m="happy"].active{border-color:#FFB347;background:rgba(255,216,155,.3)}
 .mood[data-m="sad"].active{border-color:#8FA4B5;background:rgba(143,164,181,.25)}
@@ -127,9 +127,10 @@ section{padding:120px 0}
 .mood[data-m="hopeful"].active{border-color:#FFC480;background:rgba(255,196,128,.3)}
 .mood[data-m="grateful"].active{border-color:#F090A5;background:rgba(240,144,165,.3)}
 .mood[data-m="confused"].active{border-color:#9582AB;background:rgba(149,130,171,.3)}
-.mood-emoji{font-size:36px;margin-bottom:8px}
-.mood-label{font-size:13px;color:var(--ts);font-weight:500}
-.mood-cap{text-align:center;margin-top:18px;font-size:14px;color:var(--ts);min-height:22px;transition:opacity .5s}
+.mood-emoji{font-size:28px;margin-bottom:6px;line-height:1}
+.mood-label{font-size:12px;color:var(--ts);font-weight:500}
+.mood-cap{text-align:center;margin-top:14px;font-size:14px;color:var(--ts);min-height:22px;transition:opacity .5s}
+@media(max-width:640px){.mood-opts{grid-template-columns:repeat(5,1fr);gap:8px}.mood{padding:12px 6px}.mood-emoji{font-size:22px}.mood-label{font-size:11px}}
 
 /* 心情图 */
 .mchart{display:flex;align-items:flex-end;justify-content:space-around;height:220px;padding:0 20px;margin-top:48px;gap:8px}
