@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大小学生问答便签</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fef6e4 0%, #f3d2c1 100%);
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: #001858;
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #8b8aa4;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+  }
+
+  .mode-switch {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .mode-btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .mode-btn.primary.active {
+    background: linear-gradient(135deg, #f582ae, #e06396);
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  .mode-btn.primary:not(.active) {
+    background: #fff;
+    color: #f582ae;
+    border: 2px solid #f582ae;
+  }
+
+  .mode-btn.secondary.active {
+    background: linear-gradient(135deg, #8bd3dd, #5fb8c4);
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  .mode-btn.secondary:not(.active) {
+    background: #fff;
+    color: #5fb8c4;
+    border: 2px solid #8bd3dd;
+  }
+
+  .write-section {
+    background: #fff;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    margin-bottom: 35px;
+  }
+
+  .write-section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mode-kid h2 { color: #5fb8c4; }
+  .mode-uni h2 { color: #e06396; }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color 0.2s;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: #8bd3dd;
+  }
+
+  .mode-kid textarea:focus { border-color: #8bd3dd; }
+  .mode-uni textarea:focus { border-color: #f582ae; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .mode-kid .submit-btn { background: linear-gradient(135deg, #8bd3dd, #5fb8c4); }
+  .mode-uni .submit-btn { background: linear-gradient(135deg, #f582ae, #e06396); }
+
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
+  .submit-btn:active { transform: translateY(0); }
+
+  .section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .section-title h2 {
+    font-size: 1.3rem;
+    color: #001858;
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+  }
+
+  .filter-tab {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 20px;
+    background: #fff;
+    color: #888;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-tab.active {
+    background: #001858;
+    color: #fff;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .note-card {
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    transform: rotate(-1deg);
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    animation: cardIn 0.4s ease;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px) rotate(-1deg); }
+    to { opacity: 1; transform: translateY(0) rotate(-1deg); }
+  }
+
+  .note-card:hover {
+    transform: rotate(0deg) translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  }
+
+  .note-card:nth-child(2n) { transform: rotate(1.5deg); }
+  .note-card:nth-child(2n):hover { transform: rotate(0deg) translateY(-5px); }
+  .note-card:nth-child(3n) { transform: rotate(-2deg); }
+  .note-card:nth-child(3n):hover { transform: rotate(0deg) translateY(-5px); }
+
+  .note-card.type-kid {
+    background: linear-gradient(135deg, #fff 0%, #fff 60%, #8bd3dd22 100%);
+    border: 3px solid;
+    border-image: repeating-linear-gradient(45deg, #8bd3dd, #8bd3dd 10px, #5fb8c4 10px, #5fb8c4 20px) 3;
+  }
+
+  .note-card.type-uni {
+    background: linear-gradient(135deg, #fff 0%, #fff 60%, #f582ae22 100%);
+    border: 3px solid;
+    border-image: repeating-linear-gradient(45deg, #f582ae, #f582ae 10px, #e06396 10px, #e06396 20px) 3;
+  }
+
+  .note-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .type-kid .card-title { color: #5fb8c4; }
+  .type-uni .card-title { color: #e06396; }
+
+  .qa-block {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 10px;
+    border-left: 4px solid;
+  }
+
+  .type-kid .q-block { border-left-color: #8bd3dd; }
+  .type-kid .a-block { border-left-color: #e06396; }
+  .type-uni .q-block { border-left-color: #f582ae; }
+  .type-uni .a-block { border-left-color: #5fb8c4; }
+
+  .qa-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+
+  .type-kid .q-block .qa-label { color: #5fb8c4; }
+  .type-kid .a-block .qa-label { color: #e06396; }
+  .type-uni .q-block .qa-label { color: #e06396; }
+  .type-uni .a-block .qa-label { color: #5fb8c4; }
+
+  .qa-text {
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.6;
+    word-break: break-word;
+  }
+
+  .divider-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    color: #bbb;
+    font-size: 0.8rem;
+  }
+
+  .divider-line::before,
+  .divider-line::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+    margin: 0 10px;
+  }
+
+  .card-footer {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #aaa;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #999;
+  }
+
+  .empty-state .emoji {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: #001858;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .mode-btn { padding: 10px 20px; font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>✨ 大小学生问答便签 ✨</h1>
+  <p class="subtitle">也许认识世界最通透的方式是返璞归真~</p>
+
+  <div class="mode-switch">
+    <button class="mode-btn primary active" onclick="switchMode('kid')">👶 小学生提问 · 大学生答</button>
+    <button class="mode-btn secondary" onclick="switchMode('uni')">🎓 大学生提问 · 小学生答</button>
+  </div>
+
+  <div class="write-section mode-kid" id="writeSection">
+    <h2 id="writeTitle">📝 小学生问，大学生来答~</h2>
+    <div class="form-group">
+      <label id="qLabel">小学生的问题：</label>
+      <textarea id="questionInput" placeholder="写一个充满童真的小问题吧~ 比如：长大了你觉得压力大不大？"></textarea>
+    </div>
+    <div class="form-group">
+      <label id="aLabel">大学生的回答：</label>
+      <textarea id="answerInput" placeholder="用温暖的话回答小朋友~ 比如：如果你觉得压力大，说明你正在进步呀！"></textarea>
+    </div>
+    <button class="submit-btn" onclick="submitNote()">💌 生成便签卡</button>
+  </div>
+
+  <div class="section-title">
+    <h2>🗂️ 所有便签</h2>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterCards('all')">全部</button>
+      <button class="filter-tab" onclick="filterCards('kid')">小学生问</button>
+      <button class="filter-tab" onclick="filterCards('uni')">大学生问</button>
+    </div>
+  </div>
+
+  <div class="cards-grid" id="cardsGrid"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let currentMode = 'kid';
+  let currentFilter = 'all';
+
+  const presetNotes = [
+    {
+      type: 'kid',
+      question: '长大了你觉得压力大不大？',
+      answer: '如果你觉得压力大，说明你正在进步呀！'
+    },
+    {
+      type: 'kid',
+      question: '为什么大人总是看手机不陪我玩？',
+      answer: '大人有时候也会被事情缠住呀，但是他们心里一定超级想和你一起玩的~'
+    },
+    {
+      type: 'kid',
+      question: '考试考不好怎么办？',
+      answer: '一次考试不代表什么呀，你已经很努力了，下次我们一起加油！'
+    },
+    {
+      type: 'uni',
+      question: '你以后要干什么？',
+      answer: '我以后要打工，因为打工可以赚钱！'
+    },
+    {
+      type: 'uni',
+      question: '你觉得什么是幸福？',
+      answer: '就是每天放学有冰淇淋吃，还有妈妈抱抱！'
+    },
+    {
+      type: 'uni',
+      question: '长大以后最想做的事是什么？',
+      answer: '我想当宇航员！飞到月亮上去见嫦娥姐姐和小兔子~'
+    },
+    {
+      type: 'kid',
+      question: '天上的星星为什么不会掉下来？',
+      answer: '因为它们都乖乖待在自己的轨道上呀，就像小朋友排好队一样~'
+    },
+    {
+      type: 'uni',
+      question: '你有什么烦恼吗？',
+      answer: '我最大的烦恼就是，妈妈不让我吃太多糖糖！'
+    }
+  ];
+
+  let notes = [...presetNotes];
+
+  function switchMode(mode) {
+    currentMode = mode;
+    const primaryBtn = document.querySelector('.mode-btn.primary');
+    const secondaryBtn = document.querySelector('.mode-btn.secondary');
+    const writeSection = document.getElementById('writeSection');
+    const writeTitle = document.getElementById('writeTitle');
+    const qLabel = document.getElementById('qLabel');
+    const aLabel = document.getElementById('aLabel');
+    const qInput = document.getElementById('questionInput');
+    const aInput = document.getElementById('answerInput');
+
+    if (mode === 'kid') {
+      primaryBtn.classList.add('active');
+      secondaryBtn.classList.remove('active');
+      writeSection.className = 'write-section mode-kid';
+      writeTitle.innerHTML = '📝 小学生问，大学生来答~';
+      qLabel.textContent = '小学生的问题：';
+      aLabel.textContent = '大学生的回答：';
+      qInput.placeholder = '写一个充满童真的小问题吧~ 比如：长大了你觉得压力大不大？';
+      aInput.placeholder = '用温暖的话回答小朋友~ 比如：如果你觉得压力大，说明你正在进步呀！';
+    } else {
+      primaryBtn.classList.remove('active');
+      secondaryBtn.classList.add('active');
+      writeSection.className = 'write-section mode-uni';
+      writeTitle.innerHTML = '📝 大学生问，小学生来答~';
+      qLabel.textContent = '大学生的问题：';
+      aLabel.textContent = '小学生的回答：';
+      qInput.placeholder = '问一个关于成长或生活的问题~ 比如：你以后要干什么？';
+      aInput.placeholder = '用小朋友天真的角度回答~ 比如：我以后要打工，因为打工可以赚钱！';
+    }
+  }
+
+  function submitNote() {
+    const q = document.getElementById('questionInput').value.trim();
+    const a = document.getElementById('answerInput').value.trim();
+
+    if (!q || !a) {
+      showToast('⚠️ 问题和回答都要填写哦~');
+      return;
+    }
+
+    notes.unshift({
+      type: currentMode,
+      question: q,
+      answer: a
+    });
+
+    document.getElementById('questionInput').value = '';
+    document.getElementById('answerInput').value = '';
+    renderCards();
+    showToast('✨ 便签卡生成成功！');
+  }
+
+  function filterCards(filter) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+    renderCards();
+  }
+
+  function renderCards() {
+    const grid = document.getElementById('cardsGrid');
+    const filtered = currentFilter === 'all' 
+      ? notes 
+      : notes.filter(n => n.type === currentFilter);
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column: 1/-1;">
+          <div class="emoji">📭</div>
+          <p>还没有便签卡，快来写第一张吧~</p>
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(note => {
+      if (note.type === 'kid') {
+        return `
+          <div class="note-card type-kid">
+            <div class="card-title">小学生的大问题？（全国卷）</div>
+            <div class="qa-block q-block">
+              <div class="qa-label">小学生 问</div>
+              <div class="qa-text">${escapeHtml(note.question)}</div>
+            </div>
+            <div class="divider-line">——— 班级线 ———</div>
+            <div class="qa-block a-block">
+              <div class="qa-label">大学生 答</div>
+              <div class="qa-text">${escapeHtml(note.answer)}</div>
+            </div>
+            <div class="card-footer">小学生的小问题，还有更多问题等着你~</div>
+          </div>
+        `;
+      } else {
+        return `
+          <div class="note-card type-uni">
+            <div class="card-title">大学生的小问题？（全国卷）</div>
+            <div class="qa-block q-block">
+              <div class="qa-label">大学生 问</div>
+              <div class="qa-text">${escapeHtml(note.question)}</div>
+            </div>
+            <div class="divider-line">——— 班级线 ———</div>
+            <div class="qa-block a-block">
+              <div class="qa-label">小学生 答</div>
+              <div class="qa-text">${escapeHtml(note.answer)}</div>
+            </div>
+            <div class="card-footer">小学生的回答、中学生的回答，还有更多回答等着你~</div>
+          </div>
+        `;
+      }
+    }).join('');
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  renderCards();
+</script>
+
+</body>
+</html>
