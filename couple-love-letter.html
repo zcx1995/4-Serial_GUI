@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>♥ 我们的情书 ♥</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ffe0ec 0%, #fff0f6 25%, #f3e8ff 50%, #e0e7ff 75%, #fce7f3 100%);
+    background-size: 400% 400%;
+    animation: bgShift 15s ease infinite;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  @keyframes bgShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* 飘落的爱心 */
+  .hearts-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .floating-heart {
+    position: absolute;
+    top: -50px;
+    animation: fall linear infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translateY(-50px) rotate(0deg) scale(1);
+      opacity: 0;
+    }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.7; }
+    100% {
+      transform: translateY(110vh) rotate(360deg) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  /* 标题区域 */
+  .header {
+    text-align: center;
+    padding: 40px 20px 20px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .header h1 {
+    font-size: 2.8rem;
+    color: #e879a8;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.8),
+                 0 0 20px rgba(232,121,168,0.3);
+    letter-spacing: 3px;
+    animation: titleFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes titleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .header .subtitle {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #c084fc;
+    letter-spacing: 2px;
+  }
+
+  /* 可爱小人物容器 */
+  .characters {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .character {
+    text-align: center;
+    animation: characterBounce 4s ease-in-out infinite;
+  }
+
+  .character:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+
+  @keyframes characterBounce {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    25% { transform: translateY(-12px) rotate(0deg); }
+    50% { transform: translateY(0) rotate(2deg); }
+    75% { transform: translateY(-6px) rotate(0deg); }
+  }
+
+  /* 可爱小人 - 用CSS绘制 */
+  .cute-person {
+    width: 120px;
+    height: 160px;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  /* 头部 */
+  .head {
+    width: 80px;
+    height: 80px;
+    background: #ffe0bd;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 3px solid #d4a574;
+    z-index: 2;
+  }
+
+  /* 头发 */
+  .hair {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 45px;
+    border-radius: 50% 50% 0 0;
+    z-index: 3;
+  }
+
+  .hair-girl {
+    background: linear-gradient(180deg, #8b5a3c 0%, #a0724a 100%);
+  }
+
+  .hair-boy {
+    background: linear-gradient(180deg, #3d3d3d 0%, #5a5a5a 100%);
+    border-radius: 50% 50% 30% 30%;
+  }
+
+  /* 女孩刘海 */
+  .bangs {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75px;
+    height: 20px;
+    background: linear-gradient(180deg, #8b5a3c 0%, #a0724a 100%);
+    border-radius: 0 0 50% 50%;
+    z-index: 4;
+    clip-path: polygon(0% 0%, 10% 100%, 25% 70%, 40% 100%, 55% 65%, 70% 100%, 85% 75%, 100% 100%, 100% 0%);
+  }
+
+  /* 眼睛 */
+  .eyes {
+    position: absolute;
+    top: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 18px;
+    z-index: 4;
+  }
+
+  .eye {
+    width: 12px;
+    height: 14px;
+    background: #3d2817;
+    border-radius: 50%;
+    position: relative;
+    animation: blink 4s infinite;
+  }
+
+  .eye::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  @keyframes blink {
+    0%, 45%, 55%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.1); }
+  }
+
+  /* 腮红 */
+  .blush {
+    position: absolute;
+    top: 52px;
+    width: 16px;
+    height: 8px;
+    background: #ffb6c1;
+    border-radius: 50%;
+    opacity: 0.7;
+    z-index: 4;
+  }
+
+  .blush-left { left: 10px; }
+  .blush-right { right: 10px; }
+
+  /* 嘴巴 */
+  .mouth {
+    position: absolute;
+    top: 58px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+  }
+
+  .mouth-smile {
+    width: 20px;
+    height: 10px;
+    border: 2px solid #c0392b;
+    border-top: none;
+    border-radius: 0 0 50% 50%;
+  }
+
+  .mouth-smile-boy {
+    width: 16px;
+    height: 8px;
+  }
+
+  /* 身体 */
+  .body {
+    width: 70px;
+    height: 80px;
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 30px 30px 20px 20px;
+    z-index: 1;
+  }
+
+  .body-girl {
+    background: linear-gradient(180deg, #ff9ec7 0%, #ff7eb3 50%, #e879a8 100%);
+    border: 3px solid #e86a9c;
+  }
+
+  .body-boy {
+    background: linear-gradient(180deg, #7eb8ff 0%, #5a9fff 50%, #3d85ff 100%);
+    border: 3px solid #2d6ef0;
+  }
+
+  /* 手臂 */
+  .arm {
+    width: 22px;
+    height: 50px;
+    position: absolute;
+    top: 85px;
+    border-radius: 40%;
+    z-index: 0;
+  }
+
+  .arm-girl { background: #ffe0bd; border: 2px solid #d4a574; }
+  .arm-boy { background: #ffe0bd; border: 2px solid #d4a574; }
+
+  .arm-left {
+    left: calc(50% - 55px);
+    transform: rotate(20deg);
+  }
+
+  .arm-right {
+    right: calc(50% - 55px);
+    transform: rotate(-20deg);
+  }
+
+  /* 中间的爱心 */
+  .love-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    animation: heartBeat 1.5s ease-in-out infinite;
+  }
+
+  @keyframes heartBeat {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    15% { transform: translate(-50%, -50%) scale(1.2); }
+    30% { transform: translate(-50%, -50%) scale(1); }
+    45% { transform: translate(-50%, -50%) scale(1.15); }
+    60% { transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .love-center svg {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0 0 15px rgba(255,105,180,0.6));
+  }
+
+  /* 小人名字 */
+  .char-name {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #8b5cf6;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+  }
+
+  .char-name.boy { color: #3b82f6; }
+
+  /* 信件区域 */
+  .letters-section {
+    max-width: 1200px;
+    margin: 50px auto 80px;
+    padding: 0 30px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .letters-title {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #db2777;
+    margin-bottom: 35px;
+    letter-spacing: 2px;
+  }
+
+  .letters-title::before,
+  .letters-title::after {
+    content: '✦';
+    margin: 0 15px;
+    color: #f472b6;
+  }
+
+  .letters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
+  }
+
+  /* 信件卡片 */
+  .letter-card {
+    perspective: 1500px;
+    cursor: pointer;
+    min-height: 320px;
+  }
+
+  .letter-inner {
+    position: relative;
+    width: 100%;
+    min-height: 320px;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .letter-card.open .letter-inner {
+    transform: rotateY(180deg);
+  }
+
+  /* 信封正面 */
+  .envelope {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(236,72,153,0.2),
+                0 4px 12px rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .letter-card:hover .envelope:not(.letter-content) {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(236,72,153,0.3),
+                0 8px 20px rgba(0,0,0,0.12);
+  }
+
+  .envelope-body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 30px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .env-color-1 { background: linear-gradient(145deg, #ffd1dc, #ffb3c6); }
+  .env-color-2 { background: linear-gradient(145deg, #ddd6fe, #c4b5fd); }
+  .env-color-3 { background: linear-gradient(145deg, #bbf7d0, #86efac); }
+  .env-color-4 { background: linear-gradient(145deg, #fde68a, #fcd34d); }
+  .env-color-5 { background: linear-gradient(145deg, #bfdbfe, #93c5fd); }
+  .env-color-6 { background: linear-gradient(145deg, #fecaca, #fca5a5); }
+
+  /* 信封盖子 */
+  .envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(145deg, rgba(255,255,255,0.5), rgba(255,255,255,0.1));
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    z-index: 2;
+  }
+
+  /* 封蜡 */
+  .wax-seal {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 55px;
+    height: 55px;
+    background: radial-gradient(circle at 30% 30%, #ff6b9d, #e84393, #c0267a);
+    border-radius: 50%;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(232,67,147,0.5),
+                inset 0 -3px 8px rgba(0,0,0,0.2);
+  }
+
+  .wax-seal svg {
+    width: 28px;
+    height: 28px;
+    fill: #fff;
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.2));
+  }
+
+  /* 信件提示文字 */
+  .letter-hint {
+    margin-top: 80px;
+    text-align: center;
+    z-index: 4;
+    position: relative;
+  }
+
+  .letter-hint .date {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+
+  .letter-hint .preview {
+    font-size: 1rem;
+    color: #444;
+    font-weight: 500;
+  }
+
+  .letter-hint .click-me {
+    margin-top: 12px;
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #db2777;
+    animation: pulseHint 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseHint {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+
+  /* 信件背面 - 内容 */
+  .letter-content {
+    transform: rotateY(180deg);
+    background: linear-gradient(180deg, #fffbeb 0%, #fff5d6 100%);
+    border: 2px solid #f3d9a4;
+  }
+
+  .letter-paper {
+    width: 100%;
+    height: 100%;
+    padding: 25px 22px;
+    position: relative;
+    overflow-y: auto;
+    max-height: 320px;
+  }
+
+  /* 信纸纹理线 */
+  .letter-paper::before {
+    content: '';
+    position: absolute;
+    top: 45px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    background: repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      #e8d5b0 28px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .letter-paper > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .letter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 12px;
+    border-bottom: 2px dashed #e8d5b0;
+    margin-bottom: 15px;
+  }
+
+  .letter-to {
+    font-size: 1.05rem;
+    color: #92400e;
+    font-weight: 600;
+  }
+
+  .letter-to span {
+    color: #db2777;
+  }
+
+  .letter-date {
+    font-size: 0.8rem;
+    color: #a16207;
+  }
+
+  .letter-body-text {
+    font-size: 0.95rem;
+    line-height: 28px;
+    color: #44403c;
+    text-indent: 2em;
+    white-space: pre-line;
+  }
+
+  .letter-body-text p {
+    margin-bottom: 10px;
+  }
+
+  .letter-sign {
+    margin-top: 18px;
+    text-align: right;
+    font-size: 1rem;
+    color: #db2777;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .letter-sign .sign-heart {
+    display: inline-block;
+    animation: heartBeat 1.5s infinite;
+    transform-origin: center;
+  }
+
+  /* 关闭按钮 */
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #999;
+    z-index: 10;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .close-btn:hover {
+    background: #fecaca;
+    color: #dc2626;
+    transform: rotate(90deg);
+  }
+
+  /* 滚动条美化 */
+  .letter-paper::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .letter-paper::-webkit-scrollbar-track {
+    background: #fef3c7;
+    border-radius: 3px;
+  }
+
+  .letter-paper::-webkit-scrollbar-thumb {
+    background: #d4a574;
+    border-radius: 3px;
+  }
+
+  /* 页脚 */
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #a78bfa;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer .big-heart {
+    font-size: 1.5rem;
+    color: #ec4899;
+    display: inline-block;
+    animation: heartBeat 1.5s infinite;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .header h1 { font-size: 2rem; }
+    .characters { max-width: 100%; flex-wrap: wrap; gap: 40px; }
+    .love-center { display: none; }
+    .letters-grid { grid-template-columns: 1fr; gap: 25px; }
+    .cute-person { width: 100px; height: 140px; }
+    .head { width: 70px; height: 70px; }
+    .body { width: 60px; height: 70px; top: 65px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 飘落爱心容器 -->
+<div class="hearts-container" id="heartsContainer"></div>
+
+<!-- 标题 -->
+<div class="header">
+  <h1>♥ 我 们 的 情 书 ♥</h1>
+  <div class="subtitle">~ 每一封信都是我对你说的悄悄话 ~</div>
+</div>
+
+<!-- 可爱小人物 -->
+<div class="characters">
+  <!-- 女孩 -->
+  <div class="character">
+    <div class="cute-person">
+      <div class="head">
+        <div class="hair hair-girl"></div>
+        <div class="bangs"></div>
+        <div class="eyes">
+          <div class="eye"></div>
+          <div class="eye"></div>
+        </div>
+        <div class="blush blush-left"></div>
+        <div class="blush blush-right"></div>
+        <div class="mouth"><div class="mouth-smile"></div></div>
+      </div>
+      <div class="body body-girl"></div>
+      <div class="arm arm-girl arm-left"></div>
+      <div class="arm arm-girl arm-right"></div>
+    </div>
+    <div class="char-name">小仙女 ♡</div>
+  </div>
+
+  <!-- 中间大爱心 -->
+  <div class="love-center">
+    <svg viewBox="0 0 24 24" fill="#ec4899">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+  </div>
+
+  <!-- 男孩 -->
+  <div class="character">
+    <div class="cute-person">
+      <div class="head">
+        <div class="hair hair-boy"></div>
+        <div class="eyes">
+          <div class="eye"></div>
+          <div class="eye"></div>
+        </div>
+        <div class="blush blush-left"></div>
+        <div class="blush blush-right"></div>
+        <div class="mouth"><div class="mouth-smile mouth-smile-boy"></div></div>
+      </div>
+      <div class="body body-boy"></div>
+      <div class="arm arm-boy arm-left"></div>
+      <div class="arm arm-boy arm-right"></div>
+    </div>
+    <div class="char-name boy">♡ 大笨蛋</div>
+  </div>
+</div>
+
+<!-- 信件区域 -->
+<div class="letters-section">
+  <div class="letters-title">来 自 彼 此 的 情 书</div>
+  <div class="letters-grid" id="lettersGrid">
+
+    <!-- 信件1 -->
+    <div class="letter-card" onclick="toggleLetter(this, event)">
+      <div class="letter-inner">
+        <div class="envelope">
+          <div class="envelope-body env-color-1">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="letter-hint">
+              <div class="date">2024.02.14</div>
+              <div class="preview">第一次见面的那天...</div>
+              <div class="click-me">✉ 点击打开</div>
+            </div>
+          </div>
+        </div>
+        <div class="envelope letter-content">
+          <button class="close-btn" onclick="toggleLetter(this.closest('.letter-card'), event)">✕</button>
+          <div class="letter-paper">
+            <div class="letter-header">
+              <div class="letter-to">致 <span>我最爱的你</span>：</div>
+              <div class="letter-date">2024.02.14</div>
+            </div>
+            <div class="letter-body-text">
+              <p>还记得我们第一次见面的那天吗？阳光正好，微风不燥，而你就那样笑着朝我走来，那一刻我的世界仿佛都亮了起来。</p>
+              <p>你的笑容像是春日里最温暖的阳光，让我忍不住想要靠近，想要了解更多关于你的一切。</p>
+              <p>谢谢你出现在我的生命里，让我知道原来爱一个人是这样美好而甜蜜的事情。</p>
+            </div>
+            <div class="letter-sign">永远爱你的我 <span class="sign-heart">♥</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 信件2 -->
+    <div class="letter-card" onclick="toggleLetter(this, event)">
+      <div class="letter-inner">
+        <div class="envelope">
+          <div class="envelope-body env-color-2">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="letter-hint">
+              <div class="date">2024.03.20</div>
+              <div class="preview">想和你一起看世界...</div>
+              <div class="click-me">✉ 点击打开</div>
+            </div>
+          </div>
+        </div>
+        <div class="envelope letter-content">
+          <button class="close-btn" onclick="toggleLetter(this.closest('.letter-card'), event)">✕</button>
+          <div class="letter-paper">
+            <div class="letter-header">
+              <div class="letter-to">亲爱的 <span>宝贝</span>：</div>
+              <div class="letter-date">2024.03.20</div>
+            </div>
+            <div class="letter-body-text">
+              <p>我有一个梦想，就是牵着你的手，走遍世界的每一个角落。</p>
+              <p>去看北海道的雪，去普罗旺斯看薰衣草，去冰岛追逐极光，去海边看日出日落。</p>
+              <p>其实，风景美不美不重要，重要的是身边有你。只要和你在一起，哪里都是最美的风景。</p>
+              <p>未来的路还很长，请让我一直陪着你走下去好吗？</p>
+            </div>
+            <div class="letter-sign">想你的每一天 <span class="sign-heart">♥</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 信件3 -->
+    <div class="letter-card" onclick="toggleLetter(this, event)">
+      <div class="letter-inner">
+        <div class="envelope">
+          <div class="envelope-body env-color-3">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="letter-hint">
+              <div class="date">2024.05.12</div>
+              <div class="preview">平凡日子里的小确幸...</div>
+              <div class="click-me">✉ 点击打开</div>
+            </div>
+          </div>
+        </div>
+        <div class="envelope letter-content">
+          <button class="close-btn" onclick="toggleLetter(this.closest('.letter-card'), event)">✕</button>
+          <div class="letter-paper">
+            <div class="letter-header">
+              <div class="letter-to">我最 <span>想念的你</span>：</div>
+              <div class="letter-date">2024.05.12</div>
+            </div>
+            <div class="letter-body-text">
+              <p>今天下雨了，我窝在沙发上看着窗外，突然就很想你。</p>
+              <p>想念你做的早餐，想念你抢我零食时狡黠的笑容，想念你抱着我看电视的温度。</p>
+              <p>原来幸福不需要多么轰轰烈烈，就是这些平凡日子里的点点滴滴，拼凑成了我们之间最珍贵的回忆。</p>
+              <p>谢谢你愿意和我一起过这样平淡却幸福的小日子。</p>
+            </div>
+            <div class="letter-sign">属于你的小可爱 <span class="sign-heart">♥</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 信件4 -->
+    <div class="letter-card" onclick="toggleLetter(this, event)">
+      <div class="letter-inner">
+        <div class="envelope">
+          <div class="envelope-body env-color-4">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="letter-hint">
+              <div class="date">2024.07.07</div>
+              <div class="preview">给最努力的你...</div>
+              <div class="click-me">✉ 点击打开</div>
+            </div>
+          </div>
+        </div>
+        <div class="envelope letter-content">
+          <button class="close-btn" onclick="toggleLetter(this.closest('.letter-card'), event)">✕</button>
+          <div class="letter-paper">
+            <div class="letter-header">
+              <div class="letter-to">我最 <span>棒的你</span>：</div>
+              <div class="letter-date">2024.07.07</div>
+            </div>
+            <div class="letter-body-text">
+              <p>看到你每天那么努力工作，我既心疼又骄傲。</p>
+              <p>我想告诉你，不管工作多累多辛苦，家里永远有一盏灯为你亮着，有一碗热汤为你留着，有一个人永远在等你回家。</p>
+              <p>成功了我陪你开心，失败了我陪你重头再来。你不用总是那么坚强，在我面前，你可以永远做回那个无忧无虑的小朋友。</p>
+              <p>加油呀，我相信你一定可以的！</p>
+            </div>
+            <div class="letter-sign">你最坚强的后盾 <span class="sign-heart">♥</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 信件5 -->
+    <div class="letter-card" onclick="toggleLetter(this, event)">
+      <div class="letter-inner">
+        <div class="envelope">
+          <div class="envelope-body env-color-5">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="letter-hint">
+              <div class="date">2024.09.19</div>
+              <div class="preview">关于我们的约定...</div>
+              <div class="click-me">✉ 点击打开</div>
+            </div>
+          </div>
+        </div>
+        <div class="envelope letter-content">
+          <button class="close-btn" onclick="toggleLetter(this.closest('.letter-card'), event)">✕</button>
+          <div class="letter-paper">
+            <div class="letter-header">
+              <div class="letter-to">和我 <span>拉钩的你</span>：</div>
+              <div class="letter-date">2024.09.19</div>
+            </div>
+            <div class="letter-body-text">
+              <p>还记得我们拉钩许下的约定吗？</p>
+              <p>不管吵架多凶，都不能冷战超过一晚上；不管走多远，都要牵着彼此的手；不管多老，都要把对方当成手心里的宝。</p>
+              <p>我记性不太好，所以把这些约定写下来，以后要是我忘了，你要记得提醒我哦。</p>
+              <p>拉钩上吊，一百年不许变，盖章！</p>
+            </div>
+            <div class="letter-sign">和你约定一辈子 <span class="sign-heart">♥</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 信件6 -->
+    <div class="letter-card" onclick="toggleLetter(this, event)">
+      <div class="letter-inner">
+        <div class="envelope">
+          <div class="envelope-body env-color-6">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="letter-hint">
+              <div class="date">今天</div>
+              <div class="preview">我想对你说的话...</div>
+              <div class="click-me">✉ 点击打开</div>
+            </div>
+          </div>
+        </div>
+        <div class="envelope letter-content">
+          <button class="close-btn" onclick="toggleLetter(this.closest('.letter-card'), event)">✕</button>
+          <div class="letter-paper">
+            <div class="letter-header">
+              <div class="letter-to">致 <span>独一无二的你</span>：</div>
+              <div class="letter-date">就在今天</div>
+            </div>
+            <div class="letter-body-text">
+              <p>亲爱的，谢谢你选择了我，谢谢你包容我的小脾气，谢谢你爱我本来的样子。</p>
+              <p>我不是最好的，但我会努力成为最适合你的那个人。</p>
+              <p>往后余生，风雪是你，平淡是你，清贫是你，荣华是你，心底温柔是你，目光所至，也是你。</p>
+              <p>我爱你，今天爱，明天爱，后天爱，天天爱，永远爱。</p>
+            </div>
+            <div class="letter-sign">这辈子只爱你 <span class="sign-heart">♥</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 页脚 -->
+<div class="footer">
+  <p>Made with <span class="big-heart">♥</span> for us</p>
+  <p style="margin-top:8px;">~ 愿我们的爱情像星星一样永恒闪耀 ~</p>
+</div>
+
+<script>
+  // 切换信件打开/关闭
+  function toggleLetter(card, event) {
+    // 如果点击的是关闭按钮或信件内容区域，不冒泡
+    if (event.target.closest('.close-btn')) {
+      event.stopPropagation();
+      card.classList.remove('open');
+      return;
+    }
+    
+    // 如果点击的是内容面，不关闭
+    if (card.classList.contains('open') && event.target.closest('.letter-content')) {
+      return;
+    }
+    
+    card.classList.toggle('open');
+  }
+
+  // 生成飘落的爱心
+  function createFloatingHearts() {
+    const container = document.getElementById('heartsContainer');
+    const heartColors = ['#ec4899', '#f472b6', '#f9a8d4', '#c084fc', '#fb7185', '#fda4af'];
+    const heartSizes = [16, 20, 24, 28, 32];
+    
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      
+      const size = heartSizes[Math.floor(Math.random() * heartSizes.length)];
+      const color = heartColors[Math.floor(Math.random() * heartColors.length)];
+      const left = Math.random() * 100;
+      const duration = 8 + Math.random() * 10;
+      const delay = Math.random() * 2;
+      
+      heart.innerHTML = `
+        <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      `;
+      
+      heart.style.left = left + '%';
+      heart.style.animationDuration = duration + 's';
+      heart.style.animationDelay = delay + 's';
+      
+      container.appendChild(heart);
+      
+      // 动画结束后移除
+      setTimeout(() => {
+        heart.remove();
+      }, (duration + delay) * 1000 + 500);
+      
+    }, 600);
+  }
+
+  // 初始化
+  createFloatingHearts();
+</script>
+
+</body>
+</html>
